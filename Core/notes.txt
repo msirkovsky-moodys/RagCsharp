@@ -1,0 +1,18 @@
+﻿
+Parts:
+- LLM: Ollama vs Moody's copilot - copilot?
+- Python vs C# - C# is better
+- C# oriented
+- Workflow 0.1:
+- Console app taking the PR. or web app?
+- for the first version, take the modified part of the files from the PR and run the "PR LLM linter" on them.
+- Take the whole function?
+- how to visualize the results?
+- just use a word - improve?
+
+Questions:
+Do I need Python part?
+
+---
+
+Prompts:
