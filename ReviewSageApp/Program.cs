@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Core;
+using Core.DI;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ReviewSageApp;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         var serviceCollection = new ServiceCollection();
 
@@ -12,41 +14,13 @@ class Program
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var app = serviceProvider.GetService<App>();
-        app!.Run();
+        var app = serviceProvider.GetService<App>()!;
+        await app.Run();
     }
 
-    private static void ConfigureServices(ServiceCollection services)
+    private static void ConfigureServices(IServiceCollection services)
     {
-        services.AddSingleton<IMyService, MyService>();
         services.AddSingleton<App>();
-    }
-}
-
-public class App
-{
-    private readonly IMyService _myService;
-
-    public App(IMyService myService)
-    {
-        _myService = myService;
-    }
-
-    public void Run()
-    {
-        _myService.Run();
-    }
-}
-
-public interface IMyService
-{
-    void Run();
-}
-
-public class MyService : IMyService
-{
-    public void Run()
-    {
-        Console.WriteLine("MyService is running");
+        Registering.ConfigureServices(services);
     }
 }
