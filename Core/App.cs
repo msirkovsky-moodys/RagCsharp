@@ -8,13 +8,19 @@ public class App(IPullRequestProvider pullRequestProvider)
     {
         try
         {
-            await pullRequestProvider.GetPullRequest(1);
+            var info = await pullRequestProvider.GetPullRequest(1, "PullRequestReviewTest");
+            var infoCsharp =  info.Parts.Where(x => x.FileName.EndsWith(".cs")).ToArray();
+
+            foreach (var filePatchInfo in infoCsharp)
+            {
+                var codeToImprove = filePatchInfo.PatchInfo.AddedOrModifiedCode;
+                Console.WriteLine("Improving:" + codeToImprove);
+            }
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
         }
-        
     }
 }
