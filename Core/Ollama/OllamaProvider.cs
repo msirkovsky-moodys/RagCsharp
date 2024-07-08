@@ -15,20 +15,24 @@ public class OllamaProvider : IOllamaProvider
     public async Task<string> CallOllama(string query)
     {
         using var client = new HttpClient();
-        // Create the payload
+        
         var payload = new OllamaInput
         {
-            model = "mario",
+            model = "llama3:latest",
             messages =
             [
                 new OllamaMessage
                 {
+                    role= "assistant",
+                    content= "You are a senior C# developer"
+                },
+                new OllamaMessage
+                {
                     role= "user",
-                    content= query,
-                    
-                }
+                    content= query
+                },
             ],
-            stream = false,
+            stream = false
         };
 
         var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
