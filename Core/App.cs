@@ -22,8 +22,17 @@ public class App(
             }
             */
 
-        var prompt = await ollamaProvider.CallOllama("What is the weather in London?");
-        Console.WriteLine(prompt);
+        //var prompt = await ollamaProvider.CallOllama("What is the weather in London?");
+        var prompt = """
+            I have this C# code:
+            var test = 1;
+            ---
+            please improve it to conform these rules:
+            var plus value type should be write as const value type.
+            And also add anything you think it's worth improving.
+            """;
+        var reply = await ollamaProvider.CallOllama(prompt);
+        Console.WriteLine(reply);
     }
     public async Task<PullRequestInfo> GetFiles(int prId)
     {

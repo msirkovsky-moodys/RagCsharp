@@ -3,4 +3,3 @@ var test = 1;
 ---
 please improve it to conform these rules:
 var plus value type should be write as const value type.
-
