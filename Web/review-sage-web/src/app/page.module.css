@@ -20,8 +20,9 @@
 
 .description a {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+
+  align-items: start;
   gap: 0.5rem;
 }
 
@@ -96,14 +97,7 @@
   z-index: -1;
 }
 
-.center::before,
-.center::after {
-  content: "";
-  left: 50%;
-  position: absolute;
-  filter: blur(45px);
-  transform: translateZ(0);
-}
+
 
 .logo {
   position: relative;
