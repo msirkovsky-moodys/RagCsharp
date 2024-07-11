@@ -14,13 +14,13 @@ class Program
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
-        var app = serviceProvider.GetService<App>()!;
-        await app.Run();
+        var app = serviceProvider.GetService<PullRequestAgent>()!;
+        await app.Run(1, "", "");
     }
 
     private static void ConfigureServices(IServiceCollection services)
     {
-        services.AddSingleton<App>();
+        services.AddSingleton<PullRequestAgent>();
         Registering.ConfigureServices(services);
     }
 }

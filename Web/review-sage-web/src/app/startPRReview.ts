@@ -10,7 +10,7 @@ export async function startPRReview(_: any, formData:any) {
         gitToken: formData.get('git-personal-token'),
       }
 
-      fetch('localhost:7000/api/startPRReview', {
+      fetch('localhost:7000/api/PullRequestReview/Start', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

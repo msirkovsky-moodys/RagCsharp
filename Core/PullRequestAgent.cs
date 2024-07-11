@@ -3,12 +3,17 @@ using Core.Ollama;
 
 namespace Core;
 
-public class App(
+public interface IPullRequestAgent
+{
+    Task<Suggestion[]> Run(int pullRequestId, string repoName, string token);
+
+}
+public class PullRequestAgent(
     IPullRequestProvider pullRequestProvider,
     IOllamaProvider ollamaProvider
-    )
+    ) : IPullRequestAgent
 {
-    public async Task Run()
+    public async Task<Suggestion[]> Run(int pullRequestId, string repoName, string token)
     {
 
         //var info = await GetFiles(1)
@@ -31,8 +36,10 @@ public class App(
             var plus value type should be write as const value type.
             And also add anything you think it's worth improving.
             """;
-        var reply = await ollamaProvider.CallOllama(prompt);
-        Console.WriteLine(reply);
+        //var reply = await ollamaProvider.CallOllama(prompt);
+        var reply = "Test";
+
+        return [new Suggestion() { OriginalCode = "var test = 1;", NewCode = reply }];
     }
     public async Task<PullRequestInfo> GetFiles(int prId)
     {
@@ -48,4 +55,10 @@ public class App(
             throw;
         }
     }
+}
+
+public class Suggestion
+{
+    public required string OriginalCode { get; set; }
+    public required string NewCode { get; set; }
 }

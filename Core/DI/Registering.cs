@@ -10,5 +10,6 @@ public class Registering
     {
         services.AddSingleton<IPullRequestProvider, PullRequestProvider>();
         services.AddSingleton<IOllamaProvider, OllamaProvider>();
+        services.AddSingleton<IPullRequestAgent, PullRequestAgent>();
     }
 }
