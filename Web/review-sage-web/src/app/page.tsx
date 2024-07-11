@@ -2,8 +2,6 @@
 import styles from "./page.module.css";
 import { RepoInput } from "./RepoInput";
 
-import {startPRReview} from "./startPRReview";
-import { useFormState } from "react-dom";
 export async function fetchData() {
   const prNumber = 1;
   const repoName = "msirkovsky-moodys/PullRequestReviewTest";

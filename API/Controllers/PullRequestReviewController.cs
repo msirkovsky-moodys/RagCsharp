@@ -12,7 +12,7 @@ public class PullRequestReviewController(IPullRequestAgent pullRequestAgent) : C
     public async Task<Suggestion[]> Start([FromBody] PullRequestRequest request)
     {
         var response = await pullRequestAgent.Run(request.PRNumber, request.RepoName, request.GitToken);
-        continue
+        
         return response;
     }
 }

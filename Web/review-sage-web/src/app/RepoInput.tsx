@@ -17,5 +17,18 @@ export function RepoInput(data: any) {
         <button>Improve the PR</button>
       </form>
     </div>
+    {(state && state.status) && (
+        <div className={styles.stateContainer}>
+          <p>Suggestion:</p>
+          {state.suggestions.map((suggestion: any, i:number) => (
+            <div key={i}>
+              <p>{suggestion.originalCode}</p>
+              <p>{suggestion.newCode}</p>
+              <p>--------------------</p>
+            </div>
+          ))}
+        </div>
+      )}
+
   </>
 }
