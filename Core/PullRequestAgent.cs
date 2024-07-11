@@ -39,7 +39,7 @@ public class PullRequestAgent(
         //var reply = await ollamaProvider.CallOllama(prompt);
         var reply = "Test";
 
-        return [new Suggestion() { OriginalCode = "var test = 1;", NewCode = reply }];
+        return [new Suggestion() { OriginalCode = "var test = 1;", NewCode = reply, FileName = "fileName"}];
     }
     public async Task<PullRequestInfo> GetFiles(int prId)
     {
@@ -61,4 +61,5 @@ public class Suggestion
 {
     public required string OriginalCode { get; set; }
     public required string NewCode { get; set; }
+    public required string FileName { get; set; }
 }

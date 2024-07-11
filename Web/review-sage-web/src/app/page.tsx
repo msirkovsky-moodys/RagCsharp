@@ -21,7 +21,7 @@ export default async function Home() {
     <main className={styles.main}>
       <div className={styles.description}>
         <h1>
-          SageReview          
+          SageReview v.01
         </h1>
         <div>          
         </div>
@@ -31,9 +31,7 @@ export default async function Home() {
         <RepoInput {...data} />
       </div>
 
-      <div className={styles.grid}>
-  
-      </div>
+    
     </main>
   );
 }

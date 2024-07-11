@@ -8,9 +8,8 @@ export function RepoInput(data: any) {
   const [state, action] = useFormState(startPRReview, null, 'n/a');
   console.log('state', state);
 
-  return <div className={styles.repoInput}>
-    <div className={styles.repoInput}>
-    
+  return <div className={styles.prSection}>
+    <div >
       <form action={action} >
         <div className={styles.repoInput}>
           <input name="pr-number-to-review" placeholder="PR number to review" defaultValue={data?.prNumber}></input>
@@ -20,18 +19,31 @@ export function RepoInput(data: any) {
         </div>
       </form>
     </div>
-    {(state && state.status) && (
+    <div>
+      {(state && state.status) && (
         <div className={styles.stateContainer}>
           <p>Suggestion:</p>
-          {state.suggestions.map((suggestion: any, i:number) => (
-            <div key={i}>
-              <p>{suggestion.originalCode}</p>
-              <p>{suggestion.newCode}</p>
-              <p>--------------------</p>
+          {state.suggestions.map((suggestion: any, i: number) => (
+            <div key={i} className={styles.suggestionPanel}>
+              <span>{suggestion.fileName}</span>
+              <div className={styles.sidePanel}>
+                <div>
+                  <span>Existing code:</span>
+                  <div>
+                    {suggestion.originalCode}
+                  </div>
+                  </div>
+                  <div>
+                    <span>Suggestion:</span>
+                    <div>
+                      {suggestion.newCode}
+                    </div>
+                  </div>                
+              </div>
             </div>
           ))}
         </div>
       )}
-
+    </div>
   </div>
 }
