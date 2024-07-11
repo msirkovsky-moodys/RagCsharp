@@ -11,7 +11,9 @@ public class PullRequestReviewController(IPullRequestAgent pullRequestAgent) : C
     [HttpPost(Name = "Start")]
     public async Task<Suggestion[]> Start([FromBody] PullRequestRequest request)
     {
-        return await pullRequestAgent.Run(request.PRNumber, request.RepoName, request.GitToken);
+        var response = await pullRequestAgent.Run(request.PRNumber, request.RepoName, request.GitToken);
+        continue
+        return response;
     }
 }
 

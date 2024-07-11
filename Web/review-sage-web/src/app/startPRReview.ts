@@ -9,16 +9,17 @@ export async function startPRReview(_: any, formData:any) {
         repoName: formData.get('git-repo-name'),
         gitToken: formData.get('git-personal-token'),
       }
-
-      fetch('localhost:7000/api/PullRequestReview/Start', {
+      console.log('Calling HTTP API')
+      var response = await fetch('http://localhost:5070/api/PullRequestReview/Start', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(rawFormData),
-      }).then((response) => {
-        console.log('TEST:' + response)
-      })
-  }
+        });
+
+        var json = await response.json()
+        console.log('TEST:' + JSON.stringify(json))
+      }
     return 'test'
-  }
+    }
