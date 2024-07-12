@@ -15,6 +15,19 @@ public class PullRequestAgent(
 {
     public async Task<Suggestion[]> Run(int pullRequestId, string repoName, string? token)
     {
+        if (pullRequestId == -1)
+        {
+            Thread.Sleep(2000);
+            return
+            [
+                new Suggestion
+                {
+                    OriginalCode = "var test = 1;",
+                    NewCode = "const int test = 1;",
+                    FileName = "test.cs"
+                }
+            ];
+        }
         if (string.IsNullOrWhiteSpace(token))
             token = Environment.GetEnvironmentVariable("personal_token_github_4475", EnvironmentVariableTarget.Machine);
 
