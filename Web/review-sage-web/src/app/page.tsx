@@ -5,7 +5,7 @@ import { RepoInput } from "./RepoInput";
 export async function fetchData() {
   const prNumber = 1;
   const repoName = "msirkovsky-moodys/PullRequestReviewTest";
-  const personalToken = "ghp_exampleToken123";
+  const personalToken = "";
 
   return {
     prNumber,
@@ -21,7 +21,7 @@ export default async function Home() {
     <main className={styles.main}>
       <div className={styles.description}>
         <h1>
-          SageReview v.01
+          SageReview v0.1
         </h1>
         <div>          
         </div>

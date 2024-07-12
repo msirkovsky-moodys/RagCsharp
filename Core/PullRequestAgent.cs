@@ -13,47 +13,54 @@ public class PullRequestAgent(
     IOllamaProvider ollamaProvider
     ) : IPullRequestAgent
 {
-    public async Task<Suggestion[]> Run(int pullRequestId, string repoName, string token)
+    public async Task<Suggestion[]> Run(int pullRequestId, string repoName, string? token)
     {
+        if (string.IsNullOrWhiteSpace(token))
+            token = Environment.GetEnvironmentVariable("personal_token_github_4475", EnvironmentVariableTarget.Machine);
 
-        //var info = await GetFiles(1)
-        /*
-            var infoCsharp =  info.Parts.Where(x => x.FileName.EndsWith(".cs")).ToArray();
+        var info = await pullRequestProvider.GetPullRequest(pullRequestId, repoName, token!);
 
-            foreach (var filePatchInfo in infoCsharp)
-            {
-                var codeToImprove = filePatchInfo.PatchInfo.AddedOrModifiedCode;
-                Console.WriteLine("Improving:" + codeToImprove);
-            }
-            */
+        var infoCsharp = info.Parts
+            .Where(x => x.FileName.EndsWith(".cs"))
+            .ToArray();
 
-        //var prompt = await ollamaProvider.CallOllama("What is the weather in London?");
-        var prompt = """
+        var resultTasks = infoCsharp.Select(CallOllama);
+        
+        var results = await Task.WhenAll(resultTasks);
+        return results.OrderBy(x => x.FileName).ToArray();
+    }
+
+    private async Task<Suggestion> CallOllama(FilePatchInfo filePatchInfo)
+    {
+        var prompt = $"""
             I have this C# code:
-            var test = 1;
+            {filePatchInfo.PatchInfo.AddedOrModifiedCode}
             ---
             please improve it to conform these rules:
             var plus value type should be write as const value type.
             And also add anything you think it's worth improving.
             """;
-        //var reply = await ollamaProvider.CallOllama(prompt);
-        var reply = "Test";
 
-        return [new Suggestion() { OriginalCode = "var test = 1;", NewCode = reply, FileName = "fileName"}];
+        var reply = await ollamaProvider.CallOllama(prompt);
+        return new Suggestion
+        {
+            OriginalCode = filePatchInfo.PatchInfo.AddedOrModifiedCode,
+            NewCode = reply,
+            FileName = filePatchInfo.FileName
+        };
     }
-    public async Task<PullRequestInfo> GetFiles(int prId)
-    {
-        try
-        {
-            var info = await pullRequestProvider.GetPullRequest(prId, "PullRequestReviewTest");
-            return info;
 
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+    private async Task TestOllama()
+    {
+        const string prompt = """
+          I have this C# code:
+          var test = 1;
+          ---
+          please improve it to conform these rules:
+          var plus value type should be write as const value type.
+          And also add anything you think it's worth improving.
+          """;
+        var reply = await ollamaProvider.CallOllama(prompt);
     }
 }
 

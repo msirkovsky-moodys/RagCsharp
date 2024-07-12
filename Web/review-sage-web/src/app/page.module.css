@@ -81,6 +81,7 @@
   padding: 4rem 0;
 }
 
+
 .center::before {
   background: var(--secondary-glow);
   border-radius: 50%;
@@ -251,7 +252,7 @@
 .prSection{
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 15rem 1fr;
+  grid-template-columns: 15rem 60vw;
 
   gap: 0 4rem;
 }
@@ -262,4 +263,17 @@
   gap: 0 2rem;
 
   & span { font-weight: bold;}
+}
+
+.suggestionFileName{
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.codeTextarea{
+  width: 100%;
+  height: 20rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
 }

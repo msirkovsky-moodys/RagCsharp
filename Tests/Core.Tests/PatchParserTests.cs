@@ -24,7 +24,12 @@ namespace Core.Tests
 
             var result = PatchParser.ExtractAddedLines(json);
             result.Should().Be("""
-               Console.WriteLine(hello);                                                            var hello2 = "Hello, World!";               Console.WriteLine(hello2);
+               Console.WriteLine(hello);
+               
+               
+               
+               var hello2 = "Hello, World!";
+               Console.WriteLine(hello2);
                """);
         }
     }
