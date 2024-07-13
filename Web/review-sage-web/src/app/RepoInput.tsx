@@ -11,17 +11,16 @@ export function RepoInput(data: any) {
 
    const [prompt, setPrompt] = useState(() => {
     // Try to get the value from local storage first, fallback to `data?.prompt`
-    const savedPrompt = localStorage.getItem('pr-prompt');
-    alert(savedPrompt)
+    const savedPrompt = localStorage.getItem('pr-prompt');    
     return savedPrompt || data?.prompt || '';
   });
 
    // Handle textarea change
    const handlePromptChange = (event:any) => {
-    alert(event.target.value)
+    console.log('event.target.value', event.target.value)    
     setPrompt(event.target.value);
   };
-  alert("event.target.value")
+  
   const handleSubmit = (event:any) => {
     setImprovingFlag(true);
   };
