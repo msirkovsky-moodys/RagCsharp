@@ -1,6 +1,6 @@
 'use client'
 import styles from "./page.module.css";
-import { RepoInput } from "./RepoInput";
+import { RepoInput } from "./repoInput";
 
 export async function fetchData() {
   const prNumber = -1;
@@ -34,9 +34,12 @@ export default async function Home() {
         <div>          
         </div>
       </div>
+
       <div className={styles.center}>
         <RepoInput {...data} />
-      </div>    
+      </div>
+
+    
     </main>
   );
 }
