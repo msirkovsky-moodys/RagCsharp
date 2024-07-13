@@ -13,7 +13,7 @@ export function RepoInput(data: any) {
     // Try to get the value from local storage first, fallback to `data?.prompt`
     const savedPrompt = localStorage.getItem('pr-prompt');
     alert(savedPrompt)
-    return savedPrompt || data?.prompt;
+    return savedPrompt || data?.prompt || '';
   });
 
    // Handle textarea change
