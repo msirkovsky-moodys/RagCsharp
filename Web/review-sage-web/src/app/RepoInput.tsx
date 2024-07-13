@@ -38,19 +38,19 @@ export function RepoInput(data: any) {
     </div>
     <div>
       {(state && state.status && improvingFlag == false) && (
-        <div className={styles.stateContainer}>          
+        <div className={styles.suggestionContainer}>
           {state.suggestions.map((suggestion: any, i: number) => (
-            <div key={i} className={styles.suggestionPanel}>
+            <div key={i}>
               <div className={styles.suggestionFileName}>{suggestion.fileName}</div>
               <div className={styles.sidePanel}>
                 <div>
-                  <span>Existing code:</span>
+                  <div className={styles.sidePanelTitle}>Existing code</div>
                   <div>
                     <textarea className={styles.codeTextarea} readOnly={true} value={suggestion.originalCode}></textarea>
                   </div>
                   </div>
                   <div>
-                    <span>Suggestion:</span>
+                  <div className={styles.sidePanelTitle}>Suggestion</div>                    
                     <div>
                     <textarea  className={styles.codeTextarea} readOnly={true} value={suggestion.newCode}></textarea>                      
                     </div>

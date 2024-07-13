@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import { RepoInput } from "./RepoInput";
 
 export async function fetchData() {
-  const prNumber = 1;
+  const prNumber = -1;
   const repoName = "msirkovsky-moodys/PullRequestReviewTest";
   const personalToken = "";
 
