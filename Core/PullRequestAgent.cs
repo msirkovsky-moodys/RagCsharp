@@ -82,7 +82,8 @@ public class PullRequestAgent(
         //    And also add anything you think it's worth improving.
         //    """;
 
-        var reply = await ollamaProvider.CallOllama(prompt);
+        var promptWithCode = prompt.Replace("{code}", filePatchInfo.PatchInfo.AddedOrModifiedCode);
+        var reply = await ollamaProvider.CallOllama(promptWithCode);
         return new Suggestion
         {
             OriginalCode = filePatchInfo.PatchInfo.AddedOrModifiedCode,
