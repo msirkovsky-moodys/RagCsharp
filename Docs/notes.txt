@@ -1,2 +1,12 @@
 Github API rate limit:
 All of these requests count towards your personal rate limit of 5,000 requests per hour. 
+
+checklist as a driver to use this app
+https://www.youtube.com/watch?v=8CIOLEZb9ew
+-----
+TODO:
+reset prompt to default - remove pr-draft from local storage OR save the prompts to DB
+
+Experiment mode - let LLM to generate the prompt and iterate on it
+
+

@@ -21,7 +21,8 @@ export function RepoInput(data: any) {
 
    // Handle textarea change
    const handlePromptChange = (event:any) => {
-    localStorage.setItem('pr-prompt', prompt)
+
+    localStorage.setItem('pr-prompt', event.target.value)
     setPrompt(event.target.value)
   }
   
