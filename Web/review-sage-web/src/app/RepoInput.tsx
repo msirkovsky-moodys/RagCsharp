@@ -3,8 +3,6 @@ import styles from "./page.module.css";
 import { startPRReview } from "./startPRReview";
 import { useEffect, useState } from "react";
 
-
-
 export function RepoInput(data: any) {
 
   const [state, action] = useFormState(startPRReview, null, 'n/a');
@@ -33,6 +31,7 @@ export function RepoInput(data: any) {
           >
             {improvingFlag ? 'Improving...' : 'Improve the PR'}
             </button>
+            <textarea name="pr-prompt" placeholder="Prompt" className={styles.inputPrompt}>{data?.prompt}</textarea>
         </div>
       </form>
     </div>

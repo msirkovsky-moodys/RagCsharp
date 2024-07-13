@@ -8,6 +8,7 @@ export async function startPRReview(_: any, formData:any) {
         prNumber: formData.get('pr-number-to-review'),
         repoName: formData.get('git-repo-name'),
         gitToken: formData.get('git-personal-token'),
+        prompt: formData.get('pr-prompt'),
       }
       console.log('Calling HTTP API')
       var response = await fetch('http://localhost:5070/PullRequestReview', {

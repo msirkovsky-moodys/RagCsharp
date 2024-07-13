@@ -3,9 +3,11 @@ using Core.Ollama;
 
 namespace Core;
 
+public record PrRequestInfo(int PullRequestId, string RepoName, string Token, string Prompt);
+
 public interface IPullRequestAgent
 {
-    Task<Suggestion[]> Run(int pullRequestId, string repoName, string token);
+    Task<Suggestion[]> Run(PrRequestInfo prRequestInfo);
 
 }
 public class PullRequestAgent(
@@ -13,9 +15,9 @@ public class PullRequestAgent(
     IOllamaProvider ollamaProvider
     ) : IPullRequestAgent
 {
-    public async Task<Suggestion[]> Run(int pullRequestId, string repoName, string? token)
+    public async Task<Suggestion[]> Run(PrRequestInfo prRequestInfo)
     {
-        if (pullRequestId == -1)
+        if (prRequestInfo.PullRequestId == -1)
         {
             Thread.Sleep(2000);
             return
@@ -40,31 +42,45 @@ public class PullRequestAgent(
                 }
             ];
         }
-        if (string.IsNullOrWhiteSpace(token))
-            token = Environment.GetEnvironmentVariable("personal_token_github_4475", EnvironmentVariableTarget.Machine);
 
-        var info = await pullRequestProvider.GetPullRequest(pullRequestId, repoName, token!);
+        if (string.IsNullOrWhiteSpace(prRequestInfo.Token))
+        {
+            prRequestInfo = prRequestInfo with
+            {
+                Token = Environment.GetEnvironmentVariable("personal_token_github_4475", EnvironmentVariableTarget.Machine)!
+            };
+        }
+
+        var info = await pullRequestProvider.GetPullRequest(prRequestInfo.PullRequestId, prRequestInfo.RepoName, prRequestInfo.Token);
 
         var infoCsharp = info.Parts
             .Where(x => x.FileName.EndsWith(".cs"))
             .ToArray();
 
-        var resultTasks = infoCsharp.Select(CallOllama);
+        var tasks = infoCsharp.Select(chunk => CallOllama(chunk, prRequestInfo.Prompt));
         
-        var results = await Task.WhenAll(resultTasks);
+        // I want to call one by one on the local machine. Parallel can be used with Moody's copilot.
+        var results = new List<Suggestion>();
+        foreach (var task in tasks)
+        {
+            results.Add(await task);
+        }
+        //use this in Production:
+        //var results = await Task.WhenAll(resultTasks); 
+
         return results.OrderBy(x => x.FileName).ToArray();
     }
 
-    private async Task<Suggestion> CallOllama(FilePatchInfo filePatchInfo)
+    private async Task<Suggestion> CallOllama(FilePatchInfo filePatchInfo, string prompt)
     {
-        var prompt = $"""
-            I have this C# code:
-            {filePatchInfo.PatchInfo.AddedOrModifiedCode}
-            ---
-            please improve it to conform these rules:
-            var plus value type should be write as const value type.
-            And also add anything you think it's worth improving.
-            """;
+        //var prompt = $"""
+        //    My C# code:
+        //    {filePatchInfo.PatchInfo.AddedOrModifiedCode}
+        //    ---
+        //    please improve it to conform these rules:
+        //    var plus value type should be write as const value type.
+        //    And also add anything you think it's worth improving.
+        //    """;
 
         var reply = await ollamaProvider.CallOllama(prompt);
         return new Suggestion
@@ -75,18 +91,18 @@ public class PullRequestAgent(
         };
     }
 
-    private async Task TestOllama()
-    {
-        const string prompt = """
-          I have this C# code:
-          var test = 1;
-          ---
-          please improve it to conform these rules:
-          var plus value type should be write as const value type.
-          And also add anything you think it's worth improving.
-          """;
-        var reply = await ollamaProvider.CallOllama(prompt);
-    }
+    //private async Task TestOllama()
+    //{
+    //    const string prompt = """
+    //      I have this C# code:
+    //      var test = 1;
+    //      ---
+    //      please improve it to conform these rules:
+    //      var plus value type should be write as const value type.
+    //      And also add anything you think it's worth improving.
+    //      """;
+    //    var reply = await ollamaProvider.CallOllama(prompt);
+    //}
 }
 
 public class Suggestion

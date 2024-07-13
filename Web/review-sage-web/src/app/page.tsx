@@ -6,11 +6,19 @@ export async function fetchData() {
   const prNumber = -1;
   const repoName = "msirkovsky-moodys/PullRequestReviewTest";
   const personalToken = "";
+  const prompt = ` My C# code:
+{code}
+---
+Improve it to conform these rules:
+var plus value type should be write as const value type.
+And also add anything you think it's worth improving.
+`;
 
   return {
     prNumber,
     repoName,
     personalToken,
+    prompt
   };
 }
 

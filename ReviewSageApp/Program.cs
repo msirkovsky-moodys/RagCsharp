@@ -15,7 +15,7 @@ class Program
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var app = serviceProvider.GetService<PullRequestAgent>()!;
-        await app.Run(1, "", "");
+        await app.Run(new PrRequestInfo(1, "", "", "TODO"));
     }
 
     private static void ConfigureServices(IServiceCollection services)
