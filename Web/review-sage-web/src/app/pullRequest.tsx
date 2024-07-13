@@ -4,6 +4,10 @@ import { useFormState } from "react-dom"
 import styles from "./page.module.css"
 import { startPRReview } from "./startPRReview"
 import { useEffect, useState } from "react"
+import React, { PureComponent } from 'react';
+import ReactDiffViewer from 'react-diff-viewer-continued';
+
+
 
 export function RepoInput(data: any) {
 
@@ -79,10 +83,11 @@ export function RepoInput(data: any) {
                     </div>
                   </div>
               </div>
-            </div>
+              <ReactDiffViewer oldValue={suggestion.originalCode} newValue={suggestion.newCode} splitView={true} />
+            </div>          
           ))}
-        </div>
+        </div>        
       )}
-    </div>
+    </div>    
   </div>
 }
