@@ -25,6 +25,18 @@ public class PullRequestAgent(
                     OriginalCode = "var test = 1;",
                     NewCode = "const int test = 1;",
                     FileName = "test.cs"
+                },
+                new Suggestion
+                {
+                    OriginalCode = "var test = 2;",
+                    NewCode = "const int test = 2;",
+                    FileName = "test2.cs"
+                },
+                new Suggestion
+                {
+                    OriginalCode = "var test = 3;",
+                    NewCode = "const int test = 3;",
+                    FileName = "test3.cs"
                 }
             ];
         }

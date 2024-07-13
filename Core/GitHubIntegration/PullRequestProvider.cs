@@ -28,7 +28,7 @@ public class PullRequestProvider : IPullRequestProvider
         // Headers for authentication and content type
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", token);
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("HttpClient", "1.0"));
+        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("SageReview", "0.1"));
 
         // Make the GET request to fetch pull requests
         var response = await client.GetAsync(url);
@@ -42,10 +42,8 @@ public class PullRequestProvider : IPullRequestProvider
                 Parts: JsonSerializer.Deserialize<FilePatchInfo[]>(responseBody)!
             );
         }
-        else
-        {
-            Console.WriteLine($"Failed to fetch pull requests: {response.StatusCode}");
-            throw new InvalidOperationException("Failed to fetch pull requests");
-        }
+
+        Console.WriteLine($"Failed to fetch pull requests: {response.StatusCode}");
+        throw new InvalidOperationException("Failed to fetch pull requests");
     }
 }
