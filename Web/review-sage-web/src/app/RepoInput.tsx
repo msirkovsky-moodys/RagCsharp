@@ -8,6 +8,20 @@ export function RepoInput(data: any) {
   const [state, action] = useFormState(startPRReview, null, 'n/a');
   const [improvingFlag, setImprovingFlag] = useState(false);
   console.log('state', state);
+
+   const [prompt, setPrompt] = useState(() => {
+    // Try to get the value from local storage first, fallback to `data?.prompt`
+    const savedPrompt = localStorage.getItem('pr-prompt');
+    alert(savedPrompt)
+    return savedPrompt || data?.prompt;
+  });
+
+   // Handle textarea change
+   const handlePromptChange = (event:any) => {
+    alert(event.target.value)
+    setPrompt(event.target.value);
+  };
+  alert("event.target.value")
   const handleSubmit = (event:any) => {
     setImprovingFlag(true);
   };
@@ -31,7 +45,13 @@ export function RepoInput(data: any) {
           >
             {improvingFlag ? 'Improving...' : 'Improve the PR'}
             </button>
-            <textarea name="pr-prompt" placeholder="Prompt" className={styles.inputPrompt}>{data?.prompt}</textarea>
+            <textarea 
+              name="pr-prompt" 
+              placeholder="Prompt"
+              className={styles.inputPrompt}              
+              onChange={handlePromptChange}
+              value = {prompt}
+            />
         </div>
       </form>
     </div>
