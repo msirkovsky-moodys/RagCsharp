@@ -1,35 +1,39 @@
-import { useFormState } from "react-dom";
-import styles from "./page.module.css";
-import { startPRReview } from "./startPRReview";
-import { useEffect, useState } from "react";
+'use client'
+
+import { useFormState } from "react-dom"
+import styles from "./page.module.css"
+import { startPRReview } from "./startPRReview"
+import { useEffect, useState } from "react"
 
 export function RepoInput(data: any) {
 
-  const [state, action] = useFormState(startPRReview, null, 'n/a');
-  const [improvingFlag, setImprovingFlag] = useState(false);
-  console.log('state', state);
+  const [state, action] = useFormState(startPRReview, null, 'n/a')
+  const [improvingFlag, setImprovingFlag] = useState(false)
+  console.log('state', state)
 
    const [prompt, setPrompt] = useState(() => {
-    // Try to get the value from local storage first, fallback to `data?.prompt`
-    const savedPrompt = localStorage.getItem('pr-prompt');    
-    return savedPrompt || data?.prompt || '';
-  });
+    if (typeof window === 'undefined') {
+      return 'loading...'
+    }
+    const savedPrompt = localStorage.getItem('pr-prompt')    
+    return savedPrompt || data?.prompt || ''
+  })
 
    // Handle textarea change
    const handlePromptChange = (event:any) => {
-    console.log('event.target.value', event.target.value)    
-    setPrompt(event.target.value);
-  };
+    localStorage.setItem('pr-prompt', prompt)
+    setPrompt(event.target.value)
+  }
   
   const handleSubmit = (event:any) => {
-    setImprovingFlag(true);
-  };
+    setImprovingFlag(true)
+  }
 
   useEffect(() => {
     if (state != null && improvingFlag == true) {
-      setImprovingFlag(false);
+      setImprovingFlag(false)
     }
-  }, [state]); 
+  }, [state]) 
 
 
   return <div className={styles.prSection}>
