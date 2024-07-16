@@ -7,6 +7,8 @@ namespace Core.RagExample;
 public interface ILLMClient
 {
     Task SaveTextEmbedding(SaveFileRequest[] documents);
+
+    Task<string> Query(string prompt);
 }
 
 public class LLMClient : ILLMClient
