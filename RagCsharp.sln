@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReviewSageApp", "ReviewSageApp\ReviewSageApp.csproj", "{B8D9B0F3-1319-46E6-9908-42305087F438}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ReviewSageApp\ConsoleApp.csproj", "{B8D9B0F3-1319-46E6-9908-42305087F438}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{31C4D845-4BF1-4248-BA41-68A26FADFB6B}"
 EndProject

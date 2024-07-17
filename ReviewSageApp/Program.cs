@@ -2,7 +2,7 @@
 using Core.DI;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ReviewSageApp;
+namespace ConsoleApp;
 
 class Program
 {
